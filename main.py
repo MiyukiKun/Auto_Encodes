@@ -26,7 +26,7 @@ async def dl_ffmpeg():
         s = await fast_download(bot, msg, r, "")
         message = f"{message}\n{s} Downloaded" 
         await a.edit(message)        
-        shutil.move(s, "/bin/sh/")
+        shutil.move(s, "/bin")
     await r.edit(f"FFMPEG download complete, and the active command is: \n\n`{CMD}`")
     
 
