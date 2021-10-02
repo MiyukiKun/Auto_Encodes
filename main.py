@@ -49,7 +49,7 @@ async def _(event):
 
 
 
-# loop.run_until_complete(dl_ffmpeg())
+loop.run_until_complete(dl_ffmpeg())
 
 bot.start()
 
