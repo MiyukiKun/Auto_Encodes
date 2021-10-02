@@ -36,8 +36,8 @@ async def _(event):
     file = await fast_download(bot, msg, r, "")
     file = "Getter Robo Arc - 13.mkv"
     await r.edit("Encoding........")
-    print(f'ffmpeg -i "{file}" -map 0 -c:v libx265 -crf 24  -c:a libfdk_aac  -profile:a aac_he_v2 -vbr 2 "[Encoded] {file}"')
-    subprocess.call(f'ffmpeg -i "{file}" -map 0 -c:v libx265 -crf 24  -c:a libfdk_aac  -profile:a aac_he_v2 -vbr 2 "[Encoded] {file}"')
+    print(f'ffmpegFDK -i "{file}" -map 0 -c:v libx265 -crf 24  -c:a libfdk_aac  -profile:a aac_he_v2 -vbr 2 "[Encoded] {file}"')
+    subprocess.call(f'ffmpegFDK -i "{file}" -map 0 -c:v libx265 -crf 24  -c:a libfdk_aac  -profile:a aac_he_v2 -vbr 2 "[Encoded] {file}"', shell=True)
     asyncio.sleep(1)
     res_file = await fast_upload(bot, f"[Encoded] {file}", r)
     await r.reply(file=res_file, force_document=True)
