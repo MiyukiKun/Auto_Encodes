@@ -3,7 +3,6 @@ from config import bot
 from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
-import shutil
 
 BASE = -1001361915166
 FFMPEG = -1001514731412
@@ -26,7 +25,6 @@ async def dl_ffmpeg():
         s = await fast_download(bot, msg, r, "")
         message = f"{message}\n{s} Downloaded" 
         await a.edit(message)        
-        shutil.move(s, "/bin")
     await r.edit(f"FFMPEG download complete, and the active command is: \n\n`{CMD}`")
     
 
@@ -39,7 +37,7 @@ async def _(event):
     file = "Getter Robo Arc - 13.mkv"
     await r.edit("Encoding........")
     print(f'ffmpegFDK -i "{file}" -map 0 -c:v libx265 -crf 24  -c:a libfdk_aac  -profile:a aac_he_v2 -vbr 2 "[Encoded] {file}"')
-    subprocess.call(f'ffmpegFDK -i "{file}" -map 0 -c:v libx265 -crf 24  -c:a libfdk_aac  -profile:a aac_he_v2 -vbr 2 "[Encoded] {file}"', shell=True)
+    subprocess.call(f'./ffmpegFDK -i "{file}" -map 0 -c:v libx265 -crf 24  -c:a libfdk_aac  -profile:a aac_he_v2 -vbr 2 "[Encoded] {file}"', shell=True)
     await asyncio.sleep(1)
     res_file = await fast_upload(bot, f"[Encoded] {file}", r)
     await r.reply(file=res_file, force_document=True)
