@@ -23,7 +23,7 @@ async def dl_ffmpeg():
     CMD = cmd.text
     for msg in msgs:
         s = await fast_download(bot, msg, r, "")
-        subprocess.call(f"chmod 777 {s}")
+        subprocess.call(f"chmod 777 ./{s}")
         message = f"{message}\n{s} Downloaded" 
         await a.edit(message)     
     await r.edit(f"FFMPEG download complete, and the active command is: \n\n`{CMD}`")
