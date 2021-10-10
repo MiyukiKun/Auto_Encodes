@@ -35,7 +35,6 @@ async def _(event):
     msg = await event.get_reply_message()
     r = await event.reply("Downloading..")
     file = await fast_download(bot, msg, r, "")
-    file = "Getter Robo Arc - 13.mkv"
     await r.edit("Encoding........")
     print(f'ffmpegFDK -i "{file}" -map 0 -c:v libx265 -crf 24  -c:a libfdk_aac  -profile:a aac_he_v2 -vbr 2 "[Encoded] {file}"')
     subprocess.call(f'./ffmpegFDK -i "{file}" -map 0 -c:v libx265 -crf 24  -c:a libfdk_aac  -profile:a aac_he_v2 -vbr 2 "[Encoded] {file}"', shell=True)
