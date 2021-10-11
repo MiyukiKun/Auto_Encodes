@@ -38,17 +38,8 @@ async def _(event):
         await r.edit("Encoding........")
         cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
         command = cmd.text.replace('[file]', file)
-        p = subprocess.Popen(f'./{command}', stdout=subprocess.PIPE, shell=True)
-        timer = Timer(time_between=20)
-        while True:
-            line = p.stdout.readline()
-            if not line:
-                break
-            if timer.can_send():
-                line = line.decode('utf-8')
-                print(line)
-                await r.edit(line)
-
+        subprocess.call(f'./{command}', stdout=subprocess.PIPE, shell=True)
+        asyncio.sleep(1)
         res_file = await fast_upload(bot, f"[AG] {file}", r)
         await event.reply(file=res_file, force_document=True)
     
@@ -62,7 +53,7 @@ async def _(event):
 async def _(event):
     p = subprocess.Popen(f'ls -lh .', stdout=subprocess.PIPE, shell=True)
     asyncio.sleep(1)
-    await event.reply(p.stdout.decode("utf-8", "replace").strip())
+    await event.reply(p.communicate()[0].decode("utf-8", "replace").strip())
     
 
 
