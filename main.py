@@ -48,7 +48,7 @@ async def _(event):
                 line = line.decode('utf-8')
                 await r.edit(line)
 
-        res_file = await fast_upload(bot, f"[Encoded] {file}", r)
+        res_file = await fast_upload(bot, f"[AG] {file}", r)
         await event.reply(file=res_file, force_document=True)
     
 
