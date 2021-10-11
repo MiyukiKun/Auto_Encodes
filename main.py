@@ -60,6 +60,7 @@ async def _(event):
 @bot.on(events.NewMessage(pattern="/ls"))
 async def _(event):
     p = subprocess.Popen(f'ls -lh .', stdout=subprocess.PIPE, shell=True)
+    asyncio.sleep(1)
     await event.reply(p.stdout.decode("utf-8", "replace").strip())
     
 
