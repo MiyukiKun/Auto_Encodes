@@ -39,7 +39,7 @@ async def _(event):
         cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
         command = cmd.text.replace('[file]', file)
         await event.reply(command)
-        subprocess.call(f'./{command}', shell=True)
+        asyncio.get_event_loop().run_until_complete(subprocess.call(f'./{command}', shell=True))
         await asyncio.sleep(1)
         res_file = await fast_upload(bot, f"[AG] {file}", r)
         await event.reply(file=res_file, force_document=True)
