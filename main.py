@@ -46,6 +46,7 @@ async def _(event):
                 break
             if timer.can_send():
                 line = line.decode('utf-8')
+                print(line)
                 await r.edit(line)
 
         res_file = await fast_upload(bot, f"[AG] {file}", r)
