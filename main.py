@@ -38,7 +38,8 @@ async def _(event):
         await r.edit("Encoding........")
         cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
         command = cmd.text.replace('[file]', file)
-        subprocess.call(f'./{command}', stdout=subprocess.PIPE, shell=True)
+        await event.reply(command)
+        subprocess.call(f'./{command}', shell=True)
         await asyncio.sleep(1)
         res_file = await fast_upload(bot, f"[AG] {file}", r)
         await event.reply(file=res_file, force_document=True)
@@ -63,6 +64,3 @@ loop.run_until_complete(dl_ffmpeg())
 bot.start()
 
 bot.run_until_disconnected()
-
-
-
