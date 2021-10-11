@@ -37,7 +37,7 @@ async def _(event):
         file = await fast_download(bot, msg, r, "")
         await r.edit("Encoding........")
         cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
-        command = cmd.replace('[file]', file)
+        command = cmd.text.replace('[file]', file)
         p = subprocess.Popen(f'./{command}', stdout=subprocess.PIPE, shell=True)
         timer = Timer(time_between=20)
         while True:
