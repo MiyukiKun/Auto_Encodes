@@ -4,6 +4,7 @@ from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
 from utils import run
+import os
 
 BASE = -1001361915166
 FFMPEG = -1001514731412
@@ -45,6 +46,8 @@ async def _(event):
         await run(f'./{command}')
         await asyncio.sleep(1)
         res_file = await fast_upload(bot, f"[AG] {file}", r)
+        os.remove(file)
+        os.remove(f"[AG] {file}")
         await event.reply(file=res_file, force_document=True)
     
 
