@@ -1,14 +1,17 @@
 from telethon import events
 from config import bot
-from FastTelethonhelper import Timer, fast_upload, fast_download, Timer
+from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
+from utils import run
 
 BASE = -1001361915166
 FFMPEG = -1001514731412
 FFMPEGID = (2, 3, 4)
 FFMPEGCMD = 5
 Locked = True
+
+
 
 loop = asyncio.get_event_loop()
 
@@ -39,7 +42,7 @@ async def _(event):
         cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
         command = cmd.text.replace('[file]', file)
         await event.reply(command)
-        asyncio.get_event_loop().run_until_complete(subprocess.call(f'./{command}', shell=True))
+        await run(f'./{command}')
         await asyncio.sleep(1)
         res_file = await fast_upload(bot, f"[AG] {file}", r)
         await event.reply(file=res_file, force_document=True)
