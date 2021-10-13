@@ -10,6 +10,6 @@ async def run(cmd):
 
     print(f'[{cmd!r} exited with {proc.returncode}]')
     if stdout:
-        print(f'[stdout]\n{stdout.decode()}')
+        return f'[stdout]\n{stdout.decode()}'
     if stderr:
-        print(f'[stderr]\n{stderr.decode()}')
+        return f'[stderr]\n{stderr.decode()}'
