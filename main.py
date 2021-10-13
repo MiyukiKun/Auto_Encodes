@@ -43,7 +43,7 @@ async def _(event):
         cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
         command = cmd.text.replace('[file]', file)
         await event.reply(command)
-        o = await run(f'./{command}')
+        o = await run(f'{command}')
         await event.reply(o[-2000:]) 
         res_file = await fast_upload(bot, f"[AG] {file}", r)
         os.remove(file)
