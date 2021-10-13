@@ -44,7 +44,7 @@ async def _(event):
         command = cmd.text.replace('[file]', file)
         await event.reply(command)
         o = await run(f'./{command}')
-        await event.reply(o) 
+        await event.reply(o[-4000:]) 
         res_file = await fast_upload(bot, f"[AG] {file}", r)
         os.remove(file)
         os.remove(f"[AG] {file}")
