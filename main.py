@@ -56,7 +56,7 @@ async def _(event):
     await event.reply("Im Alive")
 
 
-@bot.on(events.NewMessage(pattern="/ls{bot_username}"))
+@bot.on(events.NewMessage(pattern=f"/ls{bot_username}"))
 async def _(event):
     p = subprocess.Popen(f'ls -lh .', stdout=subprocess.PIPE, shell=True)
     await event.reply(p.communicate()[0].decode("utf-8", "replace").strip())
