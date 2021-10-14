@@ -1,5 +1,5 @@
 from telethon import events
-from config import bot
+from config import bot, bot_username
 from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
@@ -33,7 +33,7 @@ async def dl_ffmpeg():
     Locked = False
 
 
-@bot.on(events.NewMessage(pattern="/encode"))
+@bot.on(events.NewMessage(pattern=f"/encode{bot_username}"))
 async def _(event):
     if Locked == False:
         msg = await event.get_reply_message()
