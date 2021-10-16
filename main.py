@@ -44,12 +44,13 @@ async def _(event):
         command = cmd.text.replace('[file]', file)
         await event.reply(command)
         o = await run(f'{command}')
-        await event.reply(o[-2000:]) 
+        x = await event.reply(o[-2000:]) 
         res_file = await fast_upload(bot, f"[AG] {file}", r)
         os.remove(file)
         os.remove(f"[AG] {file}")
         await event.reply(file=res_file, force_document=True)
-    
+        await asyncio.sleep(5)
+        await x.delete()
 
 @bot.on(events.NewMessage(pattern="/start"))
 async def _(event):
