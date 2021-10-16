@@ -62,7 +62,7 @@ async def _(event):
     p = subprocess.Popen(f'ls -lh .', stdout=subprocess.PIPE, shell=True)
     x = await event.reply(p.communicate()[0].decode("utf-8", "replace").strip())
     await asyncio.sleep(15)
-    x.delete()
+    await x.delete()
 
 
 
