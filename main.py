@@ -48,7 +48,7 @@ async def _(event):
         o = await run(f'{command}')
         x = await event.reply(o[-2000:]) 
         res_file = await fast_upload(bot, f"./downloads/[AG] {file}", r)
-        os.remove(file)
+        os.remove(f"./downloads/{file}")
         os.remove(f"./downloads/[AG] {file}")
         await event.reply(f"./downloads/[AG] {file}", file=res_file, force_document=True)
         await asyncio.sleep(5)
