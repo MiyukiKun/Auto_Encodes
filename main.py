@@ -30,7 +30,6 @@ async def dl_ffmpeg():
         message = f"{message}\n{s} Downloaded" 
         await a.edit(message)     
     await r.edit(f"FFMPEG download complete, and the active command is: \n\n`{cmd.text}`")
-    os.mkdir('/downloads')
     Locked = False
 
 
