@@ -38,8 +38,9 @@ async def _(event):
     if Locked == False:
         msg = await event.get_reply_message()
         r = await event.reply("Downloading..")
-        file = await fast_download(bot, msg, r, "./downloads")
+        file = await fast_download(bot, msg, r, "./downloads/")
         file = file.split("/")[-1]
+        print(file)
         await r.edit("Encoding........")
         cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
         command = cmd.text.replace('[file]', file)
