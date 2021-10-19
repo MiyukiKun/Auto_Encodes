@@ -30,6 +30,7 @@ async def dl_ffmpeg():
         message = f"{message}\n{s} Downloaded" 
         await a.edit(message)     
     await r.edit(f"FFMPEG download complete, and the active command is: \n\n`{cmd.text}`")
+    os.mkdir('/downloads')
     Locked = False
 
 
@@ -38,17 +39,18 @@ async def _(event):
     if Locked == False:
         msg = await event.get_reply_message()
         r = await event.reply("Downloading..")
-        file = await fast_download(bot, msg, r, "")
+        file = await fast_download(bot, msg, r, "./downloads")
+        file = file.split("/")[-1]
         await r.edit("Encoding........")
         cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
         command = cmd.text.replace('[file]', file)
         await event.reply(command)
         o = await run(f'{command}')
         x = await event.reply(o[-2000:]) 
-        res_file = await fast_upload(bot, f"[AG] {file}", r)
+        res_file = await fast_upload(bot, f"./downloads/[AG] {file}", r)
         os.remove(file)
-        os.remove(f"[AG] {file}")
-        await event.reply(f"[AG] {file}", file=res_file, force_document=True)
+        os.remove(f"./downloads/[AG] {file}")
+        await event.reply(f"./downloads/[AG] {file}", file=res_file, force_document=True)
         await asyncio.sleep(5)
         await x.delete()
 
@@ -59,10 +61,11 @@ async def _(event):
 
 @bot.on(events.NewMessage(pattern=f"/ls{bot_username}"))
 async def _(event):
-    p = subprocess.Popen(f'ls -lh .', stdout=subprocess.PIPE, shell=True)
-    x = await event.reply(p.communicate()[0].decode("utf-8", "replace").strip())
-    await asyncio.sleep(15)
-    await x.delete()
+    if Locked == False:
+        p = subprocess.Popen(f'ls -lh downloads', stdout=subprocess.PIPE, shell=True)
+        x = await event.reply(p.communicate()[0].decode("utf-8", "replace").strip())
+        await asyncio.sleep(15)
+        await x.delete()
 
 
 
