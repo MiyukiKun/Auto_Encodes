@@ -1,11 +1,12 @@
 from telethon import events
-from config import bot, bot_username
+from config import bot
 from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
 from utils import run
 import os
 
+BOT_USERNAME = ""
 BASE = -1001361915166
 FFMPEG = -1001514731412
 DESTINATION = 1463218112
@@ -18,8 +19,10 @@ Locked = True
 loop = asyncio.get_event_loop()
 
 async def dl_ffmpeg():
-    global CMD
     global Locked
+    global BOT_USERNAME
+    bot_username = await bot.get_me()
+    BOT_USERNAME = f"@{bot_username.username}"
     message = "Starting up..."
     a = await bot.send_message(BASE, "Starting up...")
     r = await bot.send_message(BASE, "Downloading ffmpeg files now.....")
@@ -34,7 +37,7 @@ async def dl_ffmpeg():
     Locked = False
 
 
-@bot.on(events.NewMessage(pattern=f"/encode{bot_username}"))
+@bot.on(events.NewMessage(pattern=f"/encode{BOT_USERNAME}"))
 async def _(event):
     if Locked == False:
         msg = await event.get_reply_message()
@@ -58,12 +61,12 @@ async def _(event):
         await asyncio.sleep(5)
         await x.delete()
 
-@bot.on(events.NewMessage(pattern="/start"))
+@bot.on(events.NewMessage(pattern=f"/start{BOT_USERNAME}"))
 async def _(event):
     await event.reply("Im Alive")
 
 
-@bot.on(events.NewMessage(pattern=f"/ls{bot_username}"))
+@bot.on(events.NewMessage(pattern=f"/ls{BOT_USERNAME}"))
 async def _(event):
     if Locked == False:
         p = subprocess.Popen(f'ls -lh downloads', stdout=subprocess.PIPE, shell=True)
@@ -71,6 +74,29 @@ async def _(event):
         await asyncio.sleep(15)
         await x.delete()
 
+
+@bot.on(events.NewMessage(pattern=f"/up{BOT_USERNAME}"))
+async def _(event):
+    if Locked == False:
+        path = event.raw_text.split(' ', 1)
+        r = await event.reply("Uploading...")
+        res_file = await fast_upload(bot, path, r)
+        try:
+            await bot.send_message(DESTINATION, file=res_file, force_document=True)
+        except:
+            await event.reply(file=res_file, force_document=True)
+
+
+@bot.on(events.NewMessage(pattern=f"/del{BOT_USERNAME}"))
+async def _(event):
+    if Locked == False:
+        path = event.raw_text.split(' ', 1)
+        try:
+            os.remove(path)
+            await event.reply("Deleted")
+        except Exception as e:
+            await event.reply(str(e))
+        
 
 
 loop.run_until_complete(dl_ffmpeg())
