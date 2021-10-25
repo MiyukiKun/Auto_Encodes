@@ -8,6 +8,7 @@ import os
 
 BASE = -1001361915166
 FFMPEG = -1001514731412
+DESTINATION = 1463218112
 FFMPEGID = (2, 3, 4)
 FFMPEGCMD = 5
 Locked = True
@@ -50,7 +51,10 @@ async def _(event):
         res_file = await fast_upload(bot, f"./downloads/[AG] {file}", r)
         os.remove(f"./downloads/{file}")
         os.remove(f"./downloads/[AG] {file}")
-        await event.reply(f"./downloads/[AG] {file}", file=res_file, force_document=True)
+        try:
+            await bot.send_message(DESTINATION,f"./downloads/[AG] {file}", file=res_file, force_document=True)
+        except:
+            await event.reply(f"./downloads/[AG] {file}", file=res_file, force_document=True)
         await asyncio.sleep(5)
         await x.delete()
 
