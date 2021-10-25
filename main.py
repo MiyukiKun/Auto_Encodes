@@ -78,7 +78,7 @@ async def _(event):
 @bot.on(events.NewMessage(pattern=f"/up{BOT_USERNAME}"))
 async def _(event):
     if Locked == False:
-        path = event.raw_text.split(' ', 1)
+        path = event.raw_text.split(' ', 1)[-1]
         r = await event.reply("Uploading...")
         res_file = await fast_upload(bot, path, r)
         try:
