@@ -1,18 +1,19 @@
 from telethon import events
 from config import bot
+import telethon.sync
 from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
 from utils import run
 import os
 
-BOT_USERNAME = ""
 BASE = -1001361915166
 FFMPEG = -1001514731412
 DESTINATION = -1001463218112
 FFMPEGID = (2, 3, 4)
 FFMPEGCMD = 5
 Locked = True
+botusername = bot.get_me().username
 
 
 
@@ -20,9 +21,6 @@ loop = asyncio.get_event_loop()
 
 async def dl_ffmpeg():
     global Locked
-    global BOT_USERNAME
-    bot_username = await bot.get_me()
-    BOT_USERNAME = f"@{bot_username.username}"
     message = "Starting up..."
     a = await bot.send_message(BASE, "Starting up...")
     r = await bot.send_message(BASE, "Downloading ffmpeg files now.....")
@@ -37,7 +35,7 @@ async def dl_ffmpeg():
     Locked = False
 
 
-@bot.on(events.NewMessage(pattern=f"/encode{BOT_USERNAME}"))
+@bot.on(events.NewMessage(pattern=f"/encode@{botusername}"))
 async def _(event):
     if Locked == False:
         msg = await event.get_reply_message()
@@ -61,12 +59,12 @@ async def _(event):
         await asyncio.sleep(5)
         await x.delete()
 
-@bot.on(events.NewMessage(pattern=f"/start{BOT_USERNAME}"))
+@bot.on(events.NewMessage(pattern=f"/start@{botusername}"))
 async def _(event):
     await event.reply("Im Alive")
 
 
-@bot.on(events.NewMessage(pattern=f"/ls{BOT_USERNAME}"))
+@bot.on(events.NewMessage(pattern=f"/ls@{botusername}"))
 async def _(event):
     if Locked == False:
         p = subprocess.Popen(f'ls -lh downloads', stdout=subprocess.PIPE, shell=True)
@@ -75,7 +73,7 @@ async def _(event):
         await x.delete()
 
 
-@bot.on(events.NewMessage(pattern=f"/up{BOT_USERNAME}"))
+@bot.on(events.NewMessage(pattern=f"/up@{botusername}"))
 async def _(event):
     if Locked == False:
         path = event.raw_text.split(' ', 1)[-1]
@@ -87,7 +85,7 @@ async def _(event):
             await event.reply(file=res_file, force_document=True)
 
 
-@bot.on(events.NewMessage(pattern=f"/del{BOT_USERNAME}"))
+@bot.on(events.NewMessage(pattern=f"/del@{botusername}"))
 async def _(event):
     if Locked == False:
         path = event.raw_text.split(' ', 1)
