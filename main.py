@@ -88,7 +88,7 @@ async def _(event):
 @bot.on(events.NewMessage(pattern=f"/del@{botusername}"))
 async def _(event):
     if Locked == False:
-        path = event.raw_text.split(' ', 1)
+        path = event.raw_text.split(' ', 1)[-1]
         try:
             os.remove(path)
             await event.reply("Deleted")
