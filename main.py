@@ -53,9 +53,10 @@ async def _(event):
         os.remove(f"./downloads/{file}")
         os.remove(f"./downloads/[AG] {file}")
         try:
-            await bot.send_message(DESTINATION,f"./downloads/[AG] {file}", file=res_file, force_document=True)
+            y = await bot.send_message(DESTINATION,f"./downloads/[AG] {file}", file=res_file, force_document=True)
         except:
             await event.reply(f"./downloads/[AG] {file}", file=res_file, force_document=True)
+        await event.reply(f"Encoding done....\n`./downloads/[AG] {file}"`\nt.me/c/{DESTINATION}/{y.id}
         await asyncio.sleep(5)
         await x.delete()
 
