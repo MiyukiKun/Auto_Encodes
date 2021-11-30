@@ -106,9 +106,11 @@ async def _(event):
 
 @bot.on(events.NewMessage(pattern=f"/aq@{botusername}"))
 async def _(event):
-    args =  event.raw_text.split(":")
+    args =  event.raw_text.split(" ")
     msg = await event.get_reply_message()
-    for i in range(msg.id, int(args[1])):
+    if len(args) == 1:
+        args.append(5)
+    for i in range(msg.id, msg.id+int(args[1])):
             queue.append(i)
 
     await event.reply(f"Added to Queue \nQueue: {queue}")
