@@ -1,9 +1,9 @@
 import asyncio
-from FastTelethon import upload_file, download_file
 from config import bot
 import os
 import time
 import datetime as dt
+from FastTelethon import download_file, upload_file
 
 DESTINATION = -1001463218112
 D = 1463218112

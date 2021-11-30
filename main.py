@@ -1,6 +1,6 @@
 from telethon import events
 from config import bot
-from FastTelethonhelper import fast_upload, fast_download
+from FastTelethonhelper import fast_download
 import subprocess
 import asyncio
 import utils
@@ -62,29 +62,6 @@ async def _(event):
     x = await event.reply(p.communicate()[0].decode("utf-8", "replace").strip())
     await asyncio.sleep(15)
     await x.delete()
-
-
-@bot.on(events.NewMessage(pattern=f"/up@{botusername}"))
-async def _(event):
-    if Locked == False:
-        path = event.raw_text.split(' ', 1)[-1]
-        r = await event.reply("Uploading...")
-        res_file = await fast_upload(bot, path, r)
-        try:
-            await bot.send_message(DESTINATION, file=res_file, force_document=True)
-        except:
-            await event.reply(file=res_file, force_document=True)
-
-
-@bot.on(events.NewMessage(pattern=f"/del@{botusername}"))
-async def _(event):
-    if Locked == False:
-        path = event.raw_text.split(' ', 1)[-1]
-        try:
-            os.remove(path)
-            await event.reply("Deleted")
-        except Exception as e:
-            await event.reply(str(e))
 
 
 @bot.on(events.NewMessage(pattern=f"/addq@{botusername}"))
