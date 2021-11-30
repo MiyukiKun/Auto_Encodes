@@ -144,7 +144,7 @@ async def _(event):
         await event.reply("Queue cleared.")
         Locked = False            
 
-    
+
 
 
 loop.run_until_complete(dl_ffmpeg())

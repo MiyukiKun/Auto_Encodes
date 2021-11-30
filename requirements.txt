@@ -1,2 +1,1 @@
 https://github.com/LonamiWebs/Telethon/archive/refs/heads/master.zip
-https://codeload.github.com/MiyukiKun/FastTelethonhelper/zip/refs/heads/main
