@@ -118,7 +118,7 @@ async def _(event):
         Locked = True
         for i in queue:
             try:
-                msg = await bot.get_messages(event.id, ids=i)
+                msg = await bot.get_messages(event.chat_id, ids=i)
                 cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
                 utils.encode(msg, cmd)
             except Exception as e:
