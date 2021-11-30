@@ -9,6 +9,7 @@ import os
 BASE = -1001361915166
 FFMPEG = -1001514731412
 DESTINATION = -1001463218112
+D = 1463218112
 FFMPEGID = (2, 3, 4)
 FFMPEGCMD = 5
 Locked = True
@@ -79,7 +80,7 @@ async def _(event):
 @bot.on(events.NewMessage(pattern=f"/del@{botusername}"))
 async def _(event):
     if Locked == False:
-        path = event.raw_text.split(' ', 1)
+        path = event.raw_text.split(' ', 1)[-1]
         try:
             os.remove(path)
             await event.reply("Deleted")
