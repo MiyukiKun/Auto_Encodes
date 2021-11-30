@@ -1,10 +1,9 @@
 from telethon import events
 from config import bot
-import telethon.sync
 from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
-from utils import run
+import utils
 import os
 
 BASE = -1001361915166
@@ -13,13 +12,16 @@ DESTINATION = -1001463218112
 FFMPEGID = (2, 3, 4)
 FFMPEGCMD = 5
 Locked = True
-botusername = bot.get_me().username
-
+botusername = ""
+queue = []
 
 
 loop = asyncio.get_event_loop()
 
 async def dl_ffmpeg():
+    global botusername
+    me = await bot.get_me()
+    botusername = me.username
     global Locked
     message = "Starting up..."
     a = await bot.send_message(BASE, "Starting up...")
@@ -37,27 +39,16 @@ async def dl_ffmpeg():
 
 @bot.on(events.NewMessage(pattern=f"/encode@{botusername}"))
 async def _(event):
+    global Locked
     if Locked == False:
-        msg = await event.get_reply_message()
-        r = await event.reply("Downloading..")
-        file = await fast_download(bot, msg, r, "./downloads/")
-        file = file.split("/")[-1]
-        print(file)
-        await r.edit("Encoding........")
-        cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
-        command = cmd.text.replace('[file]', file)
-        await event.reply(command)
-        o = await run(f'{command}')
-        x = await event.reply(o[-2000:]) 
-        res_file = await fast_upload(bot, f"./downloads/[AG] {file}", r)
-        os.remove(f"./downloads/{file}")
-        os.remove(f"./downloads/[AG] {file}")
+        Locked = True
         try:
-            await bot.send_message(DESTINATION,f"./downloads/[AG] {file}", file=res_file, force_document=True)
+            msg = await event.get_reply_message()
+            cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
+            utils.encode(msg, cmd)
         except:
-            await event.reply(f"./downloads/[AG] {file}", file=res_file, force_document=True)
-        await asyncio.sleep(5)
-        await x.delete()
+            pass
+        Locked = False
 
 @bot.on(events.NewMessage(pattern=f"/start@{botusername}"))
 async def _(event):
@@ -94,7 +85,48 @@ async def _(event):
             await event.reply("Deleted")
         except Exception as e:
             await event.reply(str(e))
-        
+
+
+@bot.on(events.NewMessage(pattern=f"/addq@{botusername}"))
+async def _(event):
+    global Locked
+    if Locked == True:
+        await event.reply("Cant update queue when encode is in progress.")
+        return
+    msg = await event.get_reply_message()
+    queue.append(msg.id)
+    await event.reply(f"Added to Queue \nQueue: {queue}")
+
+
+@bot.on(events.NewMessage(pattern=f"/clearq@{botusername}"))
+async def _(event):
+    global Locked
+    if Locked == True:
+        await event.reply("Cant update queue when encode is in progress.")
+        return
+    global queue
+    queue = []
+    await event.reply(f"Cleared")
+
+
+@bot.on(events.NewMessage(pattern=f"/startq@{botusername}"))
+async def _(event):
+    global Locked
+    if Locked == False:
+        global queue
+        Locked = True
+        for i in queue:
+            try:
+                msg = await bot.get_messages(i)
+                cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
+                utils.encode(msg, cmd)
+            except Exception as e:
+                await event.reply(f"[{i}] skipped due to error\n\n{e}")
+        queue = []
+        await event.reply("Queue cleared.")
+        Locked = False            
+
+    
 
 
 loop.run_until_complete(dl_ffmpeg())
