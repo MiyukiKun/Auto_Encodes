@@ -1,6 +1,6 @@
 from telethon import events
 from config import bot
-from FastTelethonhelper import fast_download
+from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
 import utils
@@ -64,19 +64,37 @@ async def _(event):
     await x.delete()
 
 
+@bot.on(events.NewMessage(pattern=f"/up@{botusername}"))
+async def _(event):
+    if Locked == False:
+        path = event.raw_text.split(' ', 1)[-1]
+        r = await event.reply("Uploading...")
+        res_file = await fast_upload(bot, path, r)
+        try:
+            await bot.send_message(DESTINATION, file=res_file, force_document=True)
+        except:
+            await event.reply(file=res_file, force_document=True)
+
+
+@bot.on(events.NewMessage(pattern=f"/del@{botusername}"))
+async def _(event):
+    if Locked == False:
+        path = event.raw_text.split(' ', 1)[-1]
+        try:
+            os.remove(path)
+            await event.reply("Deleted")
+        except Exception as e:
+            await event.reply(str(e))
+
+
 @bot.on(events.NewMessage(pattern=f"/addq@{botusername}"))
 async def _(event):
     global Locked
     if Locked == True:
         await event.reply("Cant update queue when encode is in progress.")
         return
-    args =  event.raw_text.split(":")
-    if len(args) == 1:
-        msg = await event.get_reply_message()
-        queue.append(msg.id)
-    else:
-        for i in range(int(args[1]), int(args[2])+1):
-            queue.append(i)
+    msg = await event.get_reply_message()
+    queue.append(msg.id)
 
     await event.reply(f"Added to Queue \nQueue: {queue}")
 
@@ -121,7 +139,7 @@ async def _(event):
         await event.reply("Queue cleared.")
         Locked = False            
 
-
+    
 
 
 loop.run_until_complete(dl_ffmpeg())
