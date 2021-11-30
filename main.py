@@ -46,7 +46,7 @@ async def _(event):
         try:
             msg = await event.get_reply_message()
             cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
-            utils.encode(msg, cmd)
+            await utils.encode(msg, cmd)
         except:
             pass
         Locked = False
