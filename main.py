@@ -110,7 +110,7 @@ async def _(event):
     await event.reply(f"Cleared")
 
 
-@bot.on(events.NewMessage(pattern=f"/startq@{botusername}"))
+@bot.on(events.NewMessage(pattern=f"/sq@{botusername}"))
 async def _(event):
     global Locked
     if Locked == False:
@@ -118,7 +118,7 @@ async def _(event):
         Locked = True
         for i in queue:
             try:
-                msg = await bot.get_messages(i)
+                msg = await bot.get_messages(event.id, ids=i)
                 cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
                 utils.encode(msg, cmd)
             except Exception as e:
