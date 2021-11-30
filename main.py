@@ -93,8 +93,14 @@ async def _(event):
     if Locked == True:
         await event.reply("Cant update queue when encode is in progress.")
         return
-    msg = await event.get_reply_message()
-    queue.append(msg.id)
+    args =  event.raw_text.split(":")
+    if len(args) == 1:
+        msg = await event.get_reply_message()
+        queue.append(msg.id)
+    else:
+        for i in range(int(args[1]), int(args[2])):
+            queue.append(i)
+
     await event.reply(f"Added to Queue \nQueue: {queue}")
 
 
