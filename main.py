@@ -58,11 +58,10 @@ async def _(event):
 
 @bot.on(events.NewMessage(pattern=f"/ls@{botusername}"))
 async def _(event):
-    if Locked == False:
-        p = subprocess.Popen(f'ls -lh downloads', stdout=subprocess.PIPE, shell=True)
-        x = await event.reply(p.communicate()[0].decode("utf-8", "replace").strip())
-        await asyncio.sleep(15)
-        await x.delete()
+    p = subprocess.Popen(f'ls -lh downloads', stdout=subprocess.PIPE, shell=True)
+    x = await event.reply(p.communicate()[0].decode("utf-8", "replace").strip())
+    await asyncio.sleep(15)
+    await x.delete()
 
 
 @bot.on(events.NewMessage(pattern=f"/up@{botusername}"))
