@@ -1,5 +1,5 @@
 from telethon import events
-from config import bot
+from config import bot, bot_username as botusername
 from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
@@ -13,16 +13,12 @@ D = 1463218112
 FFMPEGID = (2, 3, 4)
 FFMPEGCMD = 5
 Locked = True
-botusername = ""
 queue = []
 
 
 loop = asyncio.get_event_loop()
 
 async def dl_ffmpeg():
-    global botusername
-    me = await bot.get_me()
-    botusername = me.username
     global Locked
     message = "Starting up..."
     a = await bot.send_message(BASE, "Starting up...")
