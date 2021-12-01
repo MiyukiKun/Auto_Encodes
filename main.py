@@ -1,5 +1,5 @@
 from telethon import events
-from config import bot, bot_username as botusername
+from config import bot, bot_username
 from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
@@ -34,7 +34,7 @@ async def dl_ffmpeg():
     Locked = False
 
 
-@bot.on(events.NewMessage(pattern=f"/encode@{botusername}"))
+@bot.on(events.NewMessage(pattern=f"/encode@{bot_username}"))
 async def _(event):
     global Locked
     if Locked == False:
@@ -47,12 +47,12 @@ async def _(event):
             pass
         Locked = False
 
-@bot.on(events.NewMessage(pattern=f"/start@{botusername}"))
+@bot.on(events.NewMessage(pattern=f"/start@{bot_username}"))
 async def _(event):
     await event.reply("Im Alive")
 
 
-@bot.on(events.NewMessage(pattern=f"/ls@{botusername}"))
+@bot.on(events.NewMessage(pattern=f"/ls@{bot_username}"))
 async def _(event):
     p = subprocess.Popen(f'ls -lh downloads', stdout=subprocess.PIPE, shell=True)
     x = await event.reply(p.communicate()[0].decode("utf-8", "replace").strip())
@@ -60,7 +60,7 @@ async def _(event):
     await x.delete()
 
 
-@bot.on(events.NewMessage(pattern=f"/up@{botusername}"))
+@bot.on(events.NewMessage(pattern=f"/up@{bot_username}"))
 async def _(event):
     if Locked == False:
         path = event.raw_text.split(' ', 1)[-1]
@@ -72,7 +72,7 @@ async def _(event):
             await event.reply(file=res_file, force_document=True)
 
 
-@bot.on(events.NewMessage(pattern=f"/del@{botusername}"))
+@bot.on(events.NewMessage(pattern=f"/del@{bot_username}"))
 async def _(event):
     if Locked == False:
         path = event.raw_text.split(' ', 1)[-1]
@@ -83,7 +83,7 @@ async def _(event):
             await event.reply(str(e))
 
 
-@bot.on(events.NewMessage(pattern=f"/addq@{botusername}"))
+@bot.on(events.NewMessage(pattern=f"/addq@{bot_username}"))
 async def _(event):
     global Locked
     if Locked == True:
@@ -95,7 +95,7 @@ async def _(event):
     await event.reply(f"Added to Queue \nQueue: {queue}")
 
 
-@bot.on(events.NewMessage(pattern=f"/aq@{botusername}"))
+@bot.on(events.NewMessage(pattern=f"/aq@{bot_username}"))
 async def _(event):
     args =  event.raw_text.split(" ")
     msg = await event.get_reply_message()
@@ -107,7 +107,7 @@ async def _(event):
     await event.reply(f"Added to Queue \nQueue: {queue}")
 
 
-@bot.on(events.NewMessage(pattern=f"/clearq@{botusername}"))
+@bot.on(events.NewMessage(pattern=f"/clearq@{bot_username}"))
 async def _(event):
     global Locked
     if Locked == True:
@@ -118,7 +118,7 @@ async def _(event):
     await event.reply(f"Cleared")
 
 
-@bot.on(events.NewMessage(pattern=f"/sq@{botusername}"))
+@bot.on(events.NewMessage(pattern=f"/sq@{bot_username}"))
 async def _(event):
     global Locked
     if Locked == False:
