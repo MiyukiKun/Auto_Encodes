@@ -4,7 +4,7 @@ from FastTelethonhelper import fast_upload, fast_download
 from config import bot
 import os
 DESTINATION = -1001463218112
-D = 1463218112
+D = str(DESTINATION).replace("-100", "")
 
 async def run(cmd):
     proc = await asyncio.create_subprocess_shell(
