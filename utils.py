@@ -22,7 +22,7 @@ async def run(cmd):
 
 async def encode(msg, cmd):
     r = await msg.reply("Downloading..")
-    file = await fast_download(client = bot, msg = msg, download_folder = "./downloads/")
+    file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
     file = file.split("/")[-1]
     print(file)
     await r.edit("Encoding........")
@@ -30,7 +30,7 @@ async def encode(msg, cmd):
     await msg.reply(command)
     o = await run(f'{command}')
     x = await msg.reply(o[-2000:]) 
-    res_file = await fast_upload(client = bot, file_location = f"./downloads/[AG] {file}")
+    res_file = await fast_upload(client = bot, file_location = f"./downloads/[AG] {file}", reply = r)
     r.delete()
     os.remove(f"./downloads/{file}")
     os.remove(f"./downloads/[AG] {file}")
