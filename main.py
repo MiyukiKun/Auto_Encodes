@@ -1,5 +1,5 @@
 from telethon import events
-from config import bot, bot_username, BASE, FFMPEG, FFMPEGCMD, FFMPEGID, DESTINATION
+from config import app, bot, bot_username, BASE, FFMPEG, FFMPEGCMD, FFMPEGID, DESTINATION
 from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
@@ -127,7 +127,14 @@ async def _(event):
         await event.reply("Queue cleared.")
         Locked = False            
 
-    
+
+@bot.on(events.NewMessage(pattern=f"/restart{bot_username}"))
+async def _(event):
+    try:
+        app.restart()
+    except Exception as e:
+        await event.reply(e)
+
 
 
 loop.run_until_complete(dl_ffmpeg())
