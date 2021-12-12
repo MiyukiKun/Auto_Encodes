@@ -1,17 +1,11 @@
 from telethon import events
-from config import bot, bot_username
+from config import bot, bot_username, BASE, FFMPEG, FFMPEGCMD, FFMPEGID, DESTINATION
 from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
 import utils
 import os
 
-BASE = -1001361915166
-FFMPEG = -1001514731412
-DESTINATION = -1001463218112
-D = 1463218112
-FFMPEGID = (2, 3, 4)
-FFMPEGCMD = 5
 Locked = True
 queue = []
 
@@ -62,25 +56,23 @@ async def _(event):
 
 @bot.on(events.NewMessage(pattern=f"/up{bot_username}"))
 async def _(event):
-    if Locked == False:
-        path = event.raw_text.split(' ', 1)[-1]
-        r = await event.reply("Uploading...")
-        res_file = await fast_upload(bot, path, r)
-        try:
-            await bot.send_message(DESTINATION, file=res_file, force_document=True)
-        except:
-            await event.reply(file=res_file, force_document=True)
+    path = event.raw_text.split(' ', 1)[-1]
+    r = await event.reply("Uploading...")
+    res_file = await fast_upload(bot, path, r)
+    try:
+        await bot.send_message(DESTINATION, file=res_file, force_document=True)
+    except:
+        await event.reply(file=res_file, force_document=True)
 
 
 @bot.on(events.NewMessage(pattern=f"/del{bot_username}"))
 async def _(event):
-    if Locked == False:
-        path = event.raw_text.split(' ', 1)[-1]
-        try:
-            os.remove(path)
-            await event.reply("Deleted")
-        except Exception as e:
-            await event.reply(str(e))
+    path = event.raw_text.split(' ', 1)[-1]
+    try:
+        os.remove(path)
+        await event.reply("Deleted")
+    except Exception as e:
+        await event.reply(str(e))
 
 
 @bot.on(events.NewMessage(pattern=f"/addq{bot_username}"))

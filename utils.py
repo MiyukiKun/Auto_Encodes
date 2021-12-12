@@ -3,7 +3,9 @@ import asyncio
 from FastTelethonhelper import fast_upload, fast_download
 from config import bot
 import os
-DESTINATION = -1001463218112
+
+from config import DESTINATION
+
 D = str(DESTINATION).replace("-100", "")
 
 async def run(cmd):
@@ -27,11 +29,11 @@ async def encode(msg, cmd):
     print(file)
     await r.edit("Encoding........")
     command = cmd.text.replace('[file]', file)
-    await msg.reply(command)
+    c = await msg.reply(command)
     o = await run(f'{command}')
     x = await msg.reply(o[-2000:]) 
     res_file = await fast_upload(client = bot, file_location = f"./downloads/[AG] {file}", reply = r)
-    r.delete()
+    await r.delete()
     os.remove(f"./downloads/{file}")
     os.remove(f"./downloads/[AG] {file}")
     try:
@@ -41,3 +43,4 @@ async def encode(msg, cmd):
     await msg.reply(f"Encoding done....\n`./downloads/[AG] {file}`\nt.me/c/{D}/{y.id}")
     await asyncio.sleep(5)
     await x.delete()
+    await c.delete()
