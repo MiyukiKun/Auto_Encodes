@@ -6,8 +6,7 @@ api_id = os.environ.get('API_ID')
 api_hash = os.environ.get('API_HASH')
 bot_token = os.environ.get('BOT_TOKEN')
 bot_username = os.environ.get('BOT_USERNAME')
-# heroku_key = os.environ.get('HEROKU_API_KEY')
-heroku_key = "88ee4dd4-37f8-44ca-97e2-0cbcded99841"
+heroku_key = os.environ.get('HEROKU_API_KEY')
 
 BASE = os.environ.get('BASE')
 if not BASE:
