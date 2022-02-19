@@ -30,7 +30,7 @@ async def encode(msg, cmd, e1080):
     await r.edit("Encoding........")
     command = cmd.text.replace('[file]', file)
     if e1080:
-        command = command.text.replace("scale=1280:720", "")
+        command = command.replace("scale=1280:720", "")
     c = await msg.reply(command)
     o = await run(f'{command}')
     x = await msg.reply(o[-2000:]) 
