@@ -34,13 +34,12 @@ async def _(event):
     if Locked == False:
         Locked = True
         try:
-            if "-1080" in event.text:
-                c = cmd.replace("scale=1280:720", "")
-            else:
-                c = cmd
             msg = await event.get_reply_message()
             cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
-            await utils.encode(msg, c)
+            e1080 = False
+            if '-1080' in event.text:
+                e1080 = True
+            await utils.encode(msg, cmd, e1080)
         except:
             pass
         Locked = False

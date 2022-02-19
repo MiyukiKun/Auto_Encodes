@@ -22,13 +22,15 @@ async def run(cmd):
     if stderr:
         return f'[stderr]\n{stderr.decode()}'
 
-async def encode(msg, cmd):
+async def encode(msg, cmd, e1080):
     r = await msg.reply("Downloading..")
     file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
     file = file.split("/")[-1]
     print(file)
     await r.edit("Encoding........")
     command = cmd.text.replace('[file]', file)
+    if e1080:
+        command = command.text.replace("scale=1280:720", "")
     c = await msg.reply(command)
     o = await run(f'{command}')
     x = await msg.reply(o[-2000:]) 
