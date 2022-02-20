@@ -22,7 +22,7 @@ async def run(cmd):
     if stderr:
         return f'[stderr]\n{stderr.decode()}'
 
-async def encode(msg, cmd, e1080):
+async def encode(msg, cmd, e1080=False):
     r = await msg.reply("Downloading..")
     file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
     file = file.split("/")[-1]
