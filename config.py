@@ -1,5 +1,8 @@
 import os
+import dotenv
 from telethon import TelegramClient
+
+dotenv.load_dotenv('.env')
 
 api_id = os.environ.get('API_ID')
 api_hash = os.environ.get('API_HASH')
