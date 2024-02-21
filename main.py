@@ -136,6 +136,21 @@ async def _(event):
         Locked = False
 
 
+@bot.on(events.NewMessage(pattern=f"/download{bot_username}"))
+async def _(event):
+    data = event.text.split(" ")
+    if "magnet" in data[1] or "torrent" in data[1]:
+        r = await event.reply("Downloading...")
+        f = await utils.download_torrent(data[1], r)
+        os.remove(f"./downloads/{f}")
+        for root, subdirectories, files in os.walk('./downloads'):
+            for file in files:
+                f = os.path.join(root, file)
+                file = await fast_upload(bot, f, r)
+                await bot.send_message(event.chat_id, f, file=file, force_document= True)
+        utils.delete_files('downloads')
+        await r.delete()
+
 
 loop.run_until_complete(dl_ffmpeg())
 
