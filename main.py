@@ -142,7 +142,6 @@ async def _(event):
     if "magnet" in data[1] or "torrent" in data[1]:
         r = await event.reply("Downloading...")
         f = await utils.download_torrent(data[1], r)
-        os.remove(f"./downloads/{f}")
         for root, subdirectories, files in os.walk('./downloads'):
             for file in files:
                 f = os.path.join(root, file)
