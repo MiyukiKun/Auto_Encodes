@@ -67,7 +67,7 @@ async def download_torrent(link, event):
         time.sleep(1)
     await bot.edit_message(event.chat_id,message,"Got Metadata, Starting Torrent Download...")
 
-    chat_id,message,f"Starting, {handle.name()}")
+    await bot.edit_message(event.chat_id,message,f"Starting, {handle.name()}")
     while (handle.status().state != lt.torrent_status.seeding):
         s = handle.status()
         state_str = ['queued', 'checking', 'downloading metadata', \
