@@ -22,21 +22,21 @@ async def run(cmd):
     if stderr:
         return f'[stderr]\n{stderr.decode()}'
 
-async def encode(msg, cmd, e1080=False):
-    r = await msg.reply("Downloading..")
+async def encode(msg, cmd, res):
+    r = await msg.reply("Downloading...")
     file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
     file = file.split("/")[-1]
-    print(file)
-    await r.edit("Encoding........")
     command = cmd.text.replace('[file]', file)
-    if e1080:
-        command = command.replace("-vf scale=1280:720", "")
+    if res == 1080:
+        command = command.replace("-vf scale=1280:720", "-vf scale=1920:1080")
+    elif res == 360:
+        command = command.replace("-vf scale=1280:720", "-vf scale=640:360")
     c = await msg.reply(command)
     o = await run(f'{command}')
     x = await msg.reply(o[-2000:]) 
     res_file = await fast_upload(client = bot, file_location = f"./downloads/[AG] {file}", reply = r)
     await r.delete()
-    os.remove(f"./downloads/{file}")
+    
     os.remove(f"./downloads/[AG] {file}")
     try:
         y = await bot.send_message(DESTINATION,f"./downloads/[AG] {file}", file=res_file, force_document=True)
