@@ -1,4 +1,3 @@
 telethon
 https://codeload.github.com/MiyukiKun/FastTelethonhelper/zip/refs/heads/main
-dotenv
 libtorrent
