@@ -36,10 +36,13 @@ async def _(event):
         try:
             msg = await event.get_reply_message()
             cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
-            e1080 = False
             if '-1080' in event.text:
-                e1080 = True
-            await utils.encode(msg, cmd, e1080)
+                res = 1080
+            elif '-720' in event.text:
+                res = 720
+            elif '-360' in event.text:
+                res = 360
+            await utils.encode(msg, cmd, res)
         except:
             pass
         Locked = False
@@ -128,15 +131,7 @@ async def _(event):
                 await event.reply(f"[{i}] skipped due to error\n\n{e}")
         queue = []
         await event.reply("Queue cleared.")
-        Locked = False            
-
-
-@bot.on(events.NewMessage(pattern=f"/restart{bot_username}"))
-async def _(event):
-    try:
-        app.restart()
-    except Exception as e:
-        await event.reply(e)
+        Locked = False
 
 
 
