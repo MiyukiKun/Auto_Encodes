@@ -1,5 +1,5 @@
 from telethon import events
-from config import app, bot, bot_username, BASE, FFMPEG, FFMPEGCMD, FFMPEGID, DESTINATION
+from config import bot, bot_username, BASE, FFMPEG, FFMPEGCMD, FFMPEGID, DESTINATION
 from FastTelethonhelper import fast_upload, fast_download
 import subprocess
 import asyncio
