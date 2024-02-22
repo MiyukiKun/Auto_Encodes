@@ -126,9 +126,9 @@ async def _(event):
             try:
                 msg = await bot.get_messages(event.chat_id, ids=i)
                 cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
-                await utils.encode(msg, 360)
-                await utils.encode(msg, 720)
-                await utils.encode(msg, 1080)
+                await utils.encode(msg, cmd, 360)
+                await utils.encode(msg, cmd, 720)
+                await utils.encode(msg, cmd, 1080)
             except Exception as e:
                 await event.reply(f"[{i}] skipped due to error\n\n{e}")
         queue = []
