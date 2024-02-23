@@ -42,7 +42,11 @@ async def _(event):
                 res = 720
             elif '-360' in event.text:
                 res = 360
-            await utils.encode(msg, cmd, res)
+            r = await msg.reply("Downloading...")
+            file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
+            pfile = file.split("/")[-1]
+            await utils.encode(msg, r, pfile, cmd, res)
+            os.remove(file)
         except:
             pass
         Locked = False
