@@ -24,7 +24,7 @@ async def run(cmd):
     if stderr:
         return f'[stderr]\n{stderr.decode()}'
 
-async def encode(msg, r, file, cmd, res):
+async def encode(msg, r, file, cmd, res, name):
     command = cmd.text.replace('[file]', file)
     if res == 1080:
         command = command.replace("-vf scale=1280:720", "-vf scale=1920:1080")
@@ -33,7 +33,7 @@ async def encode(msg, r, file, cmd, res):
     c = await msg.reply(command)
     o = await run(f'{command}')
     x = await msg.reply(o[-2000:]) 
-    res_file = await fast_upload(client = bot, file_location = f"./downloads/[AG] {file}", reply = r)
+    res_file = await fast_upload(client = bot, file_location = f"./downloads/[AG] {file}", reply = r, name=name)
     
     os.remove(f"./downloads/[AG] {file}")
     try:
