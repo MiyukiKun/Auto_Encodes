@@ -110,7 +110,7 @@ async def _(event):
     end = int(data[2].split("/")[-1])
     chid = int(data[1].split("/")[-2])
     for i in range(start, end+1):
-        queue.append((f"-100{chid}", i))
+        queue.append((int(f"-100{chid}"), i))
 
     await event.reply(f"Added to Queue \nQueue: {queue}")
 
