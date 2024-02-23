@@ -106,9 +106,9 @@ async def _(event):
 @bot.on(events.NewMessage(pattern=f"/aq{bot_username}"))
 async def _(event):
     data =  event.raw_text.split("\n")
-    start = data[1].split("/")[-1]
-    end = data[2].split("/")[-1]
-    chid = data[1].split("/")[-2]
+    start = int(data[1].split("/")[-1])
+    end = int(data[2].split("/")[-1])
+    chid = int(data[1].split("/")[-2])
     for i in range(start, end+1):
         queue.append((chid, i))
 
