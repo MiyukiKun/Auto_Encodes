@@ -6,6 +6,7 @@ import os
 import libtorrent as lt
 import datetime
 from config import DESTINATION
+import shutil 
 
 D = str(DESTINATION).replace("-100", "")
 
