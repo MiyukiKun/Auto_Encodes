@@ -98,19 +98,19 @@ async def _(event):
         await event.reply("Cant update queue when encode is in progress.")
         return
     msg = await event.get_reply_message()
-    queue.append(msg.id)
+    queue.append((event.chat_id, msg.id))
 
     await event.reply(f"Added to Queue \nQueue: {queue}")
 
 
 @bot.on(events.NewMessage(pattern=f"/aq{bot_username}"))
 async def _(event):
-    args =  event.raw_text.split(" ")
-    msg = await event.get_reply_message()
-    if len(args) == 1:
-        args.append(5)
-    for i in range(msg.id, msg.id+int(args[1])):
-            queue.append(i)
+    data =  event.raw_text.split("\n")
+    start = data[1].split("/")[-1]
+    end = data[2].split("/")[-1]
+    chid = data[1].split("/")[-2]
+    for i in range(start, end+1):
+        queue.append((chid, i))
 
     await event.reply(f"Added to Queue \nQueue: {queue}")
 
@@ -136,7 +136,7 @@ async def _(event):
         start_ep = int(event.raw_text.split(" ")[2])
         for i in queue:
             try:
-                msg = await bot.get_messages(event.chat_id, ids=i)
+                msg = await bot.get_messages(i[0], ids=i[1])
                 cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
                 r = await msg.reply("Downloading...")
                 file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
