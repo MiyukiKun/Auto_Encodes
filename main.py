@@ -169,7 +169,7 @@ async def _(event):
         await r.delete()
 
 
-@bot.on(events.NewMessage(pattern=(f"/sthumb{bot_username}")))
+@bot.on(events.NewMessage(pattern=f"/sthumb{bot_username}"))
 async def thumb(event):
     x = await event.get_reply_message()
     thumb = await bot.download_media(x.photo)
@@ -180,14 +180,14 @@ async def thumb(event):
     await event.reply("Set as default thumbnail")
 
 
-@bot.on(events.NewMessage(pattern=(f"/cthumb{bot_username}")))
+@bot.on(events.NewMessage(pattern=f"/cthumb{bot_username}"))
 async def clear_thumb(event):
     with open("thumb.png", "w") as f:
         f.write("")
     await event.reply("cleared thumbnail")
 
 
-@bot.on(events.NewMessage(pattern=(f"/vthumb{bot_username}")))
+@bot.on(events.NewMessage(pattern=f"/vthumb{bot_username}"))
 async def view(event):
     try:
         await event.reply("current default thumbnail", file="thumb.png")
