@@ -34,6 +34,11 @@ async def _(event):
     if Locked == False:
         Locked = True
         try:
+            name = event.raw_text.split(" ")
+            if len(name) == 1:
+                name = None
+            else:
+                name = name[-1]
             msg = await event.get_reply_message()
             cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
             if '-1080' in event.text:
@@ -45,7 +50,7 @@ async def _(event):
             r = await msg.reply("Downloading...")
             file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
             pfile = file.split("/")[-1]
-            await utils.encode(msg, r, pfile, cmd, res)
+            await utils.encode(msg, r, pfile, cmd, res, name)
             os.remove(file)
             await r.delete()
         except:
@@ -127,6 +132,8 @@ async def _(event):
     if Locked == False:
         global queue
         Locked = True
+        name_format = event.raw_text.split(" ")[1]
+        start_ep = int(event.raw_text.split(" ")[2])
         for i in queue:
             try:
                 msg = await bot.get_messages(event.chat_id, ids=i)
@@ -134,9 +141,10 @@ async def _(event):
                 r = await msg.reply("Downloading...")
                 file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
                 pfile = file.split("/")[-1]
-                await utils.encode(msg, r, pfile, cmd, 360)
-                await utils.encode(msg, r, pfile, cmd, 720)
-                await utils.encode(msg, r, pfile, cmd, 1080)
+                name = name_format.replace("UwU", str(start_ep))
+                await utils.encode(msg, r, pfile, cmd, 360, name.replace("RES", "360p")
+                await utils.encode(msg, r, pfile, cmd, 720, name.replace("RES", "720p")
+                await utils.encode(msg, r, pfile, cmd, 1080 name.replace("RES", "1080p")
                 os.remove(file)
                 await r.delete()
             except Exception as e:
