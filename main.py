@@ -132,8 +132,8 @@ async def _(event):
     if Locked == False:
         global queue
         Locked = True
-        name_format = event.raw_text.split(" ")[1]
-        start_ep = int(event.raw_text.split(" ")[2])
+        name_format = event.raw_text.split("\n")[1]
+        start_ep = int(event.raw_text.split("\n")[2])
         for i in queue:
             try:
                 msg = await bot.get_messages(i[0], ids=i[1])
