@@ -180,7 +180,7 @@ async def thumb(event):
     await event.reply("Set as default thumbnail")
 
 
-@bot.on(events.NewMessage(pattern=(f"/cthumb{bot_username")))
+@bot.on(events.NewMessage(pattern=(f"/cthumb{bot_username}")))
 async def clear_thumb(event):
     with open("thumb.png", "w") as f:
         f.write("")
