@@ -30,17 +30,17 @@ async def encode(msg, r, file, cmd, res, name):
         command = command.replace("-vf scale=1280:720", "-vf scale=1920:1080")
     elif res == 360:
         command = command.replace("-vf scale=1280:720", "-vf scale=640:360")
-    c = await msg.reply(command)
+    c = await r.reply(command)
     o = await run(f'{command}')
-    x = await msg.reply(o[-2000:]) 
+    x = await r.reply(o[-2000:]) 
     res_file = await fast_upload(client = bot, file_location = f"./downloads/[AG] {file}", reply = r, name=name)
     
     os.remove(f"./downloads/[AG] {file}")
     try:
         y = await bot.send_message(DESTINATION,f"[AG] [{res}p] {file}", file=res_file, force_document=True)
     except:
-        y = await msg.reply(f"[AG] [{res}p] {file}", file=res_file, thumb="thumb.png", force_document=True)
-    await msg.reply(f"Encoding done....\n`./downloads/[AG] {file}`\nt.me/c/{D}/{y.id}")
+        y = await r.reply(f"[AG] [{res}p] {file}", file=res_file, thumb="thumb.png", force_document=True)
+    await r.reply(f"Encoding done....\n`./downloads/[AG] {file}`\nt.me/c/{D}/{y.id}")
     await asyncio.sleep(5)
     await x.delete()
     await c.delete()
