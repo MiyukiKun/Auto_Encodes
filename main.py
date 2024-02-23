@@ -138,7 +138,7 @@ async def _(event):
             try:
                 msg = await bot.get_messages(i[0], ids=i[1])
                 cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
-                r = await msg.reply("Downloading...")
+                r = await event.reply("Downloading...")
                 file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
                 pfile = file.split("/")[-1]
                 name = name_format.replace("UwU", str(start_ep))
