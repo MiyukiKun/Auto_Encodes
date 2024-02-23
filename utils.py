@@ -24,10 +24,7 @@ async def run(cmd):
     if stderr:
         return f'[stderr]\n{stderr.decode()}'
 
-async def encode(msg, cmd, res):
-    r = await msg.reply("Downloading...")
-    file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
-    file = file.split("/")[-1]
+async def encode(msg, r, file, cmd, res):
     command = cmd.text.replace('[file]', file)
     if res == 1080:
         command = command.replace("-vf scale=1280:720", "-vf scale=1920:1080")
@@ -37,13 +34,12 @@ async def encode(msg, cmd, res):
     o = await run(f'{command}')
     x = await msg.reply(o[-2000:]) 
     res_file = await fast_upload(client = bot, file_location = f"./downloads/[AG] {file}", reply = r)
-    await r.delete()
     
     os.remove(f"./downloads/[AG] {file}")
     try:
-        y = await bot.send_message(DESTINATION,f"./downloads/[AG] {file}", file=res_file, force_document=True)
+        y = await bot.send_message(DESTINATION,f"[AG] [{res}p] {file}", file=res_file, force_document=True)
     except:
-        y = await msg.reply(f"./downloads/[AG] {file}", file=res_file, force_document=True)
+        y = await msg.reply(f"[AG] [{res}p] {file}", file=res_file, force_document=True)
     await msg.reply(f"Encoding done....\n`./downloads/[AG] {file}`\nt.me/c/{D}/{y.id}")
     await asyncio.sleep(5)
     await x.delete()
