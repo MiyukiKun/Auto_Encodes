@@ -47,6 +47,7 @@ async def _(event):
             pfile = file.split("/")[-1]
             await utils.encode(msg, r, pfile, cmd, res)
             os.remove(file)
+            await r.delete()
         except:
             pass
         Locked = False
@@ -130,9 +131,14 @@ async def _(event):
             try:
                 msg = await bot.get_messages(event.chat_id, ids=i)
                 cmd = await bot.get_messages(FFMPEG, ids=FFMPEGCMD)
-                await utils.encode(msg, cmd, 360)
-                await utils.encode(msg, cmd, 720)
-                await utils.encode(msg, cmd, 1080)
+                r = await msg.reply("Downloading...")
+                file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
+                pfile = file.split("/")[-1]
+                await utils.encode(msg, r, pfile, cmd, 360)
+                await utils.encode(msg, r, pfile, cmd, 720)
+                await utils.encode(msg, r, pfile, cmd, 1080)
+                os.remove(file)
+                await r.delete()
             except Exception as e:
                 await event.reply(f"[{i}] skipped due to error\n\n{e}")
         queue = []
