@@ -144,7 +144,7 @@ async def _(event):
                 name = name_format.replace("UwU", str(start_ep))
                 await utils.encode(msg, r, pfile, cmd, 360, name.replace("RES", "360p"))
                 await utils.encode(msg, r, pfile, cmd, 720, name.replace("RES", "720p"))
-                await utils.encode(msg, r, pfile, cmd, 1080 name.replace("RES", "1080p"))
+                await utils.encode(msg, r, pfile, cmd, 1080, name.replace("RES", "1080p"))
                 os.remove(file)
                 await r.delete()
             except Exception as e:
