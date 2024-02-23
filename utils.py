@@ -39,7 +39,7 @@ async def encode(msg, r, file, cmd, res, name):
     try:
         y = await bot.send_message(DESTINATION,f"[AG] [{res}p] {file}", file=res_file, force_document=True)
     except:
-        y = await msg.reply(f"[AG] [{res}p] {file}", file=res_file, force_document=True)
+        y = await msg.reply(f"[AG] [{res}p] {file}", file=res_file, thumb="thumb.png", force_document=True)
     await msg.reply(f"Encoding done....\n`./downloads/[AG] {file}`\nt.me/c/{D}/{y.id}")
     await asyncio.sleep(5)
     await x.delete()
