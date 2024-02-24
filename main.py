@@ -142,7 +142,7 @@ async def _(event):
                 r = await event.reply("Downloading...")
                 file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
                 pfile = file.split("/")[-1]
-                name = name_format.replace("UwU", str(start_ep) + count)
+                name = name_format.replace("UwU", str(start_ep + count))
                 count += 1
                 await utils.encode(msg, r, pfile, cmd, 360, name.replace("RES", "360p"))
                 await utils.encode(msg, r, pfile, cmd, 720, name.replace("RES", "720p"))
