@@ -37,9 +37,9 @@ async def encode(msg, r, file, cmd, res, name):
     
     os.remove(f"./downloads/[AG] {file}")
     try:
-        y = await bot.send_message(DESTINATION,f"[AG] [{res}p] {file}", file=res_file, thumb="thumb.png", force_document=True)
+        y = await bot.send_message(DESTINATION,f"[AG] {name.replace('.mkv', ''}", file=res_file, thumb="thumb.png", force_document=True)
     except:
-        y = await r.reply(f"[AG] [{res}p] {file}", file=res_file, thumb="thumb.png", force_document=True)
+        y = await r.reply(f"[AG] {name.replace('.mkv', ''}", file=res_file, thumb="thumb.png", force_document=True)
     await r.reply(f"Encoding done....\n`./downloads/[AG] {file}`\nt.me/c/{D}/{y.id}")
     await asyncio.sleep(5)
     await x.delete()
