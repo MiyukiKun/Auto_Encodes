@@ -47,10 +47,16 @@ async def _(event):
                 res = 720
             elif '-360' in event.text:
                 res = 360
+            else res = "all"
             r = await msg.reply("Downloading...")
             file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
             pfile = file.split("/")[-1]
-            await utils.encode(msg, r, pfile, cmd, res, name)
+            if res == "all":
+                await utils.encode(msg, r, pfile, cmd, 1080, name.replace("RES", "1080p"))
+                await utils.encode(msg, r, pfile, cmd, 720, name.replace("RES", "720p"))
+                await utils.encode(msg, r, pfile, cmd, 360, name.replace("RES", "360p"))
+            else:
+                await utils.encode(msg, r, pfile, cmd, res, name)
             os.remove(file)
             await r.delete()
         except:
