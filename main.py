@@ -47,7 +47,8 @@ async def _(event):
                 res = 720
             elif '-360' in event.text:
                 res = 360
-            else res = "all"
+            else:
+                res = "all"
             r = await msg.reply("Downloading...")
             file = await fast_download(client = bot, msg = msg, reply = r, download_folder = "./downloads/")
             pfile = file.split("/")[-1]
