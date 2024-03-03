@@ -34,7 +34,7 @@ async def _(event):
     if Locked == False:
         Locked = True
         try:
-            name = event.raw_text.split(" ")
+            name = event.raw_text.split(" ", 1)
             if len(name) == 1:
                 name = None
             else:
